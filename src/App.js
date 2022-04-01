@@ -5,9 +5,9 @@ import PostForm from './components/PostForm'
 import Postitem from './components/PostItem'
 import PostList from './components/PostList'
 import MyButton from './components/UI/button/MyButton'
-import MyInput from './components/UI/input/MyInput'
+//import MyInput from './components/UI/input/MyInput'
 import MyModal from './components/UI/MyModal/MyModal'
-import MySelect from './components/UI/select/MySelect'
+//import MySelect from './components/UI/select/MySelect'
 import './styles/App.css'
 
 function App() {
@@ -18,9 +18,9 @@ function App() {
   ])
 
   const [filter, setFilter] = useState({ sort: '', query: '' })
+  const [modal, setModal] = useState(false)
 
   const sortedPosts = useMemo(() => {
-    console.log(12)
     if (filter.sort) {
       return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
     } return posts;
@@ -32,6 +32,7 @@ function App() {
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
 
   //отримуємо пост з дочернього елементу
@@ -42,9 +43,15 @@ function App() {
   return (
     <div className="App">
 
-      <MyModal visible={true} r>
+      <MyButton style={{ marginTop: '15px' }} onClick={() => setModal(true)}>
+        Створити користувача
+      </MyButton>
+
+      <MyModal visible={modal} setVisible={setModal}>
         <PostForm create={createPost} />
       </MyModal>
+
+
 
       <hr style={{ margin: "15px 0" }} />
 
