@@ -23,5 +23,49 @@
      border-radius: 5px;
  }
 
- 
+ .remove-btn {
+    margin-right: 0.5rem;
+  }
+  
+  .post-enter {
+    transform:  translateX(350px);
+  }
+
+  .post-enter-active {
+    transform:  translateX(0px);
+    transition: all 500ms ease-in;
+  }
+
+  .post-exit {
+    opacity: 1;
+  }
+
+  .post-exit-active {
+    transform:  translateX(-350px);
+    transition: all 500ms ease-in;
+  }
+
+  .page__wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 30px 0;
+  }
+
+  .page{
+    font-size: 1.4rem;
+    padding: 5px;
+    margin-right: 7px;
+    border: 2px solid teal;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .page:last-child{
+    margin-right: 0;
+  }
+
+  .page__current{
+    font-weight: bold;
+    border:2px solid yellowgreen;
+  }
 

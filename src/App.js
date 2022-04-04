@@ -1,34 +1,37 @@
-import React, { useMemo, useRef, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import PostService from './components/API/PostServise'
+import { useFetching } from './components/hooks/useFetching'
+import { usePots } from './components/hooks/usePosts'
 import PostFilter from './components/PostFilter'
 import PostForm from './components/PostForm'
-//import Counter from './components/Counter'
-import Postitem from './components/PostItem'
 import PostList from './components/PostList'
 import MyButton from './components/UI/button/MyButton'
-//import MyInput from './components/UI/input/MyInput'
+import Loader from './components/UI/loader/Loader'
 import MyModal from './components/UI/MyModal/MyModal'
-//import MySelect from './components/UI/select/MySelect'
 import './styles/App.css'
+import { gatPagesArray, getPageCount } from './utils/pages'
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: 'Javascript', body: 'ggg' },
-    { id: 2, title: 'Php', body: 'hhh' },
-    { id: 3, title: 'C++', body: 'ooo' },
-  ])
-
+  const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({ sort: '', query: '' })
   const [modal, setModal] = useState(false)
+  const [totalPages, setTotalPages] = useState(0)
+  const [limit, setLimit] = useState(10)
+  const [page, setPage] = useState(1)
+  const sortedAndSearchedPosts = usePots(posts, filter.sort, filter.query)
+  let pagesArray = gatPagesArray(totalPages)
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-    } return posts;
-  }, [filter.sort, posts])
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page) => {
+    const responce = await PostService.getAll(limit, page)
+    setPosts(responce.data)
+    const totalCount = responce.headers['x-total-count']
+    setTotalPages(getPageCount(totalCount, limit))
+  })
 
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
-  }, [filter.query, sortedPosts])
+  useEffect(() => {
+    fetchPosts(limit, page)
+  }, [])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
@@ -40,9 +43,13 @@ function App() {
     setPosts(posts.filter(p => p.id !== post.id))
   }
 
+  const changePage = (page) => {
+    setPage(page)
+    fetchPosts(limit, page)
+  }
+
   return (
     <div className="App">
-
       <MyButton style={{ marginTop: '15px' }} onClick={() => setModal(true)}>
         Створити користувача
       </MyButton>
@@ -51,8 +58,6 @@ function App() {
         <PostForm create={createPost} />
       </MyModal>
 
-
-
       <hr style={{ margin: "15px 0" }} />
 
       <PostFilter
@@ -60,7 +65,24 @@ function App() {
         setFilter={setFilter}
       />
 
-      < PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постів" />
+      <div className="page__wrapper">
+        {pagesArray.map(p =>
+          <span
+            onClick={() => changePage(p)}
+            key={p}
+            className={page === p ? 'page page__current' : 'page'}>
+            {p}
+          </span>
+        )}
+      </div>
+
+      {postError &&
+        <h1>Виникла помилка ${postError}</h1>}
+      {isPostsLoading
+        ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: '80px' }}><Loader /></div>
+        : <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постів" />
+      }
+
     </div >
   );
 }
