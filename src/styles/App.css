@@ -6,7 +6,8 @@
 
  #root{
      display: flex;
-     justify-content: center;
+     flex-direction: column;
+     align-items: center;
  }
 
  .App{
@@ -67,5 +68,53 @@
   .page__current{
     font-weight: bold;
     border:2px solid yellowgreen;
+  }
+
+  .navbar{
+    height: 100px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background:rgb(218, 212, 212);
+  }
+
+  .navbar__links{
+    margin-left: auto;
+  }
+
+  .navbar__links a{
+    font-size: 1.5rem;
+    margin-right: 15px;
+    padding: 10px;
+    color: teal;
+    text-decoration: none;
+    border: 2px solid teal;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .navbar__links a:hover{
+    color: gray;
+    border-color: gray;
+  }
+
+  .navbar__links a:active{
+    color: yellowgreen;
+    border-color: yellowgreen;
+  }
+
+  .about__body{
+    display: flex;
+    justify-content: center;
+  }
+
+  .about__title{
+    padding: 20px;
+    margin-top: 100px;
+    font-size: 3rem;
+    color: teal;
+    border: 5px solid teal;
+    border-radius: 5px;
   }
 

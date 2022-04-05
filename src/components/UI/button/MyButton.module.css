@@ -3,12 +3,17 @@
     color: teal;
     font-size: 14px;
     background-color: transparent;
-    border: 1px solid teal;
+    border: 2px solid teal;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .myBtn:hover{
-    color: #000;
-    border: 1px solid #000;
-}
+    color: gray;
+    border-color: gray;
+  }
+
+  .myBtn:active{
+    color: yellowgreen;
+    border-color: yellowgreen;
+  }
