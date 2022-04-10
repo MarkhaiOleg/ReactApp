@@ -24,6 +24,14 @@
      border-radius: 5px;
  }
 
+ .post__btns{
+   display: flex;
+ }
+
+ .post__btns__item{
+   margin-right: 10px;
+ }
+
  .remove-btn {
     margin-right: 0.5rem;
   }
@@ -117,4 +125,39 @@
     border: 5px solid teal;
     border-radius: 5px;
   }
+
+  .coment__body{
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    margin: 100px 30px 30px 30px;
+    padding: 30px;
+    border: 6px solid teal;
+    border-radius: 5px;
+  }
+
+  .coment__title{
+    font-size: 50px;
+    padding-bottom: 20px;
+  }
+
+  .comment__title__small{
+    font-size: 45px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .public__form{
+    margin-top: 70px;
+    padding: 30px;
+    border: 5px solid teal;
+    border-radius: 5px;
+  }
+
+  .public__form h1{
+    margin-bottom: 10px;
+    color: teal;
+  }
+
+  
 
